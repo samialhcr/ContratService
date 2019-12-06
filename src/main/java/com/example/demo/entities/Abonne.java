@@ -1,12 +1,16 @@
 package com.example.demo.entities;
 
 import java.io.Serializable;
-
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -33,6 +37,17 @@ public class Abonne extends Utilisateurs implements Serializable{
 	    @OneToOne
 	    @JoinColumn(name = "id_contrat")
 	    private Contrat contrat;
+	    
+		@ManyToMany(fetch = FetchType.LAZY,
+	            cascade = {
+	                CascadeType.PERSIST,
+	                CascadeType.MERGE})
+		@JoinTable(
+				  name = "gestionOffre", 
+				  joinColumns = @JoinColumn(name = "id"), 
+				  inverseJoinColumns = @JoinColumn(name = "id_Offre"))
+		private Set<Offre> tags = new HashSet<>();
+		
 	    
 		public Abonne() {
 			super();

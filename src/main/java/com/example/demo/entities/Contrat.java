@@ -11,10 +11,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Contrat implements Serializable{
@@ -30,6 +32,11 @@ public class Contrat implements Serializable{
 	    @OneToOne
 	    @JoinColumn(name = "id_abonne")
 	    private Abonne abonne;
+	    
+	    @JsonIgnore
+		@ManyToOne
+		@JoinColumn(name="id_bo", nullable=false)//colonne de contrat
+		private Bo bo;
 	   
 	    
 		public Contrat() {
